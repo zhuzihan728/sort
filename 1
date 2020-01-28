@@ -1,0 +1,93 @@
+st ui.
+#print("enter length: ")
+#lens = int(input())
+#list = []
+#print("enter elements: ")
+#while (lens>0):
+  #  a = int(input())
+   # list.append(a)
+   # lens = lens-1
+
+
+#insertion sort
+def insert_sort(list):
+    lens = len(list)        #length of list is n
+    for i in range(1,lens): #n-1+1 = n times as one more execution to jump put pf loop
+        key = list[i]       #n-1 times
+        j = i-1             #n-1 times
+        while(j>=0 and key<list[j]): #1 -- (i+1) times
+            list[j+1]=list[j]        #0 -- i times
+            j-=1                     #0 -- i times
+        list[j+1]=key                #n-1 times
+    return list
+
+#best case: t1*n + t2*(n-1) + t3*(n-1) + (n-1)*(t4*1) + t7*(n-1)
+#          =n*(t1+t2+t3+t4+t7) - (t2+t3+t4+t7
+#        =>O(n)
+#worst case: t1*n + t2*(n-1) + t3*(n-1) + (t4*((n+2)(n-1)/2)+t5*(n*(n-1)/2)+t6*(n*(n-1)/2)) + t7*(n-1)
+#           = n^2*(t4+t5+t6)/2 + n*(t1+t2+t3+t4/2-t5/2-t6/2+t7) - (t2+t3+t4+t7)
+#         =>O(n^2)
+# the order of growth for the worst case of insertion sort is n^2
+
+#print(insert_sort(list))
+
+#############################################################################################################################################
+
+
+
+#resursion: divide-and-couquer
+
+#Divide the problem into smaller same problem
+#Conquer subproblems recursively, if they are small enough, solve them in a straightforward way.
+#Combine the solutions to the subproblems for the original problem.
+
+
+
+#merge sort
+def merge (a,p,q,r):
+    n = q-p+1 #3
+    m = r-q #2
+    L=[]
+    R=[]
+    s = p
+
+    while(s<p+n):
+        L.append(a[s]) #0,1,2
+        s+=1
+    #print(L)
+    s = q+1
+    while (s<q+m+1):
+        R.append(a[s])
+        s+=1
+    #print(R)
+    w = max(a)+1
+    L.append(w)
+    R.append(w)
+    i = 0
+    j = 0
+    for k in range (p,r+1):
+
+        if L[i]<=R[j]:
+            a[k] = L[i]
+            i+=1
+        else:
+            a[k] = R[j]
+            j+=1
+
+    return a
+
+def merge_sort(list,p,r):
+    if(p>=r):
+        return list
+    else:
+        q = int((p+r)/2)
+        merge_sort(list,p,q)
+        merge_sort(list,q+1,r)
+        a = merge(list, p, q, r)
+        if(len(a)==len(list)):
+            return a
+
+list = [-1,2,3,100,4,5,6,44,3]
+print(merge_sort(list,0,len(list)-1))
+#print(merge([1,7,8,2,3],0,2,4))
+
